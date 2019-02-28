@@ -31,7 +31,7 @@ resource "aws_route_table" "art"{
 vpc_id = "${aws_vpc.main.id}"
 route {
 cidr_block = "0.0.0.0/0"
-geteway_id = "${aws_internet_gateway.jenkins_igw.id}"
+gateway_id = "${aws_internet_gateway.jenkins_igw.id}"
  }
  tags {
   Name = "Public subnet route table"
