@@ -1,0 +1,41 @@
+
+{
+"variables":{
+"region": "eu-central-1",
+"source_ami" : "ami-0eaec5838478eb0ba"
+ },
+"builders":[
+{
+"type" : "amazon-ebs",
+"profile" : "default",
+"region" : "{{user `region`}}",
+"instance_type" : "t2.micro",
+"source_ami" : "{{user `source_ami`}}",
+"ssh_username" : "ec2-user",
+"ami_name" : "jenkins-slave",
+"ami_description" : "Amazon Linux Instance for Jenkins Slave",
+"run_tags" : {
+"Name": "packer-builder-docker"
+},
+"tags": {
+"Tool" : "Packer",
+"Author" : "Ion Drugalea"
+}
+
+}],
+ "provisioners" : [
+        {
+            "type" : "file",
+            "source" : "/home/ec2-user/git/ci_cd_pipeline",
+            "destination" : "/tmp"
+        },
+        {
+            "type" : "shell",
+            "script" : "./jenkins-slave-setup.sh",
+            "execute_command" : "sudo -E -S sh '{{ .Path }}'"
+        }
+    ]
+
+
+
+}
